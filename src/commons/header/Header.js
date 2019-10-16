@@ -23,6 +23,10 @@ export default class Header extends Component {
     closeModalHandler = () =>{
         this.setState({modalIsOpen : false})
     }
+
+    tabChangeHandler = (event,value) => {
+        this.setState({value})
+    }
   render() {
     return (
         <div>
@@ -36,7 +40,7 @@ export default class Header extends Component {
                     </div>
                 </header>
         <Modal ariaHideApp={false} isOpen={this.state.modalIsOpen} contentLabel="Login" onRequestClose={this.closeModalHandler}>
-        <Tabs value={this.state.value}>
+        <Tabs value={this.state.value} onChange={this.tabChangeHandler}>
             <Tab label="LOGIN"></Tab>
             <Tab label="REGISTER"></Tab>
         </Tabs>
