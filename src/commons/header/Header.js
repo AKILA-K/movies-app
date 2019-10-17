@@ -40,14 +40,25 @@ export default class Header extends Component {
         this.state= {
             modalIsOpen : false,
             value : 0,
-            username : "",
-            userNameRequired : "dispNone"
+            userNameRequired : "dispNone",
+            username: "",
+            passwordRequired: "dispNone",
+            password: ""
         };
 
     }
 
     openModalHandler = () => {
-        this.setState({modalIsOpen : true})
+        this.setState({modalIsOpen : true});
+        this.setState({
+            modalIsOpen: true,
+            value: 0,
+            usernameRequired: "dispNone",
+            username: "",
+            passwordRequired: "dispNone",
+            password: ""
+        });
+
     }
 
     closeModalHandler = () =>{
@@ -60,11 +71,18 @@ export default class Header extends Component {
 
     loginClickHandler = () => {
         this.state.username === "" ? this.setState({userNameRequired: "dispBlock"}) : this.setState({userNameRequired: "dispNone"});
+        this.state.password === "" ? this.setState({ passwordRequired: "dispBlock" }) : this.setState({ passwordRequired: "dispNone" });  
     }
 
     inputUsernameChangeHandler = (e) =>{
         this.setState({username: e.target.value})
     }
+
+    inputPasswordChangeHandler = (e) => {
+        this.setState({ password: e.target.value });
+    }
+
+
   render() {
     return (
         <div>
@@ -93,7 +111,10 @@ export default class Header extends Component {
                 </FormControl><br/>
                 <FormControl required>  
                 <InputLabel htmlFor="password">Password</InputLabel>
-                <Input id="password" type="password"></Input>
+                <Input id="password" type="password" password={this.state.password} onChange={this.inputPasswordChangeHandler} />
+                                <FormHelperText className={this.state.passwordRequired}>
+                                    <span className="red">required</span>
+                                </FormHelperText>
             </FormControl><br />
             <Button variant="contained" color="primary" onClick={this.loginClickHandler}>LOGIN</Button>
             {/* <Button className="button" variant="contained" color="primary">LOGIN</Button> */}
