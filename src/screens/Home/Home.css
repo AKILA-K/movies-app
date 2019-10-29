@@ -34,8 +34,9 @@ flex-container {
 }
 
 .right {
-    padding-top: 20px;
-    width: 24%;
+     padding-top: 20px; 
+    /* padding-left: 400px; */
+     width: 20%; 
 }
 
 .released-movie-grid-item {
