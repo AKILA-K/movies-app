@@ -173,6 +173,18 @@ class Home extends Component {
                                             ></TextField>
                                 
                                 </FormControl>
+
+                                <FormControl className={classes.formControl}>
+                                            <TextField
+                                                id = 'releasedateEnd'
+                                                label='Release Date End'
+                                                type='date'
+                                                defaultValue=''
+                                                InputLabelProps={{shrink : true}}
+
+                                            ></TextField>
+                                
+                                </FormControl>
                             </CardContent>
                         </Card>
                     </div>
