@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './Home.css';
+import Details from '../details/Details';
 import Header from '../../common/header/Header';
-import { withStyles} from '@material-ui/core/styles';
-import movieData from '../../common/movieData';
-import genres from '../../common/genres';
-import artists from '../../common/artists';
+import { withStyles } from '@material-ui/core/styles';
+import moviesData from '../../common/movieData';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import genres from '../../common/genres';
+import artists from '../../common/artists';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import FormControl from '@material-ui/core/FormControl';
@@ -19,11 +21,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
-
-// const themes = createMuiTheme({
-//   spacing: 4,
-// });
-
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
@@ -46,10 +44,9 @@ const styles = theme => ({
         cursor: 'pointer'
     },
     formControl: {
-        margin: theme.spacing(5),
+        margin: theme.spacing.unit,
         minWidth: 240,
         maxWidth: 240
-        
     },
     title: {
         color: theme.palette.primary.light,
@@ -62,20 +59,25 @@ class Home extends Component {
         super();
         this.state = {
             movieName: "",
-            genres : [],
-            artists:[]
+            genres: [],
+            artists: []
         }
     }
 
     movieNameChangeHandler = event => {
         this.setState({ movieName: event.target.value });
     }
+
     genreSelectHandler = event => {
         this.setState({ genres: event.target.value });
     }
 
     artistSelectHandler = event => {
         this.setState({ artists: event.target.value });
+    }
+
+    movieClickHandler = (movieId) => {
+        ReactDOM.render(<Details movieId={movieId} />, document.getElementById('root'));
     }
 
     render() {
@@ -89,7 +91,7 @@ class Home extends Component {
                 </div>
 
                 <GridList cols={5} className={classes.gridListUpcomingMovies} >
-                    {movieData.map(movie => (
+                    {moviesData.map(movie => (
                         <GridListTile key={movie.id}>
                             <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
                             <GridListTileBar title={movie.title} />
@@ -98,10 +100,10 @@ class Home extends Component {
                 </GridList>
 
                 <div className="flex-container">
-                <div className="left">
+                    <div className="left">
                         <GridList cellHeight={350} cols={4} className={classes.gridListMain}>
-                            {movieData.map(movie => (
-                                <GridListTile className="released-movie-grid-item" key={"grid" + movie.id}>
+                            {moviesData.map(movie => (
+                                <GridListTile onClick={() => this.movieClickHandler(movie.id)} className="released-movie-grid-item" key={"grid" + movie.id}>
                                     <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
                                     <GridListTileBar
                                         title={movie.title}
@@ -119,15 +121,16 @@ class Home extends Component {
                                         FIND MOVIES BY:
                                     </Typography>
                                 </FormControl>
+
                                 <FormControl className={classes.formControl}>
                                     <InputLabel htmlFor="movieName">Movie Name</InputLabel>
                                     <Input id="movieName" onChange={this.movieNameChangeHandler} />
                                 </FormControl>
+
                                 <FormControl className={classes.formControl}>
                                     <InputLabel htmlFor="select-multiple-checkbox">Genres</InputLabel>
                                     <Select
                                         multiple
-                                       // input={<Input id="select-multiple-checkbox" />}
                                         input={<Input id="select-multiple-checkbox-genre" />}
                                         renderValue={selected => selected.join(',')}
                                         value={this.state.genres}
@@ -163,36 +166,37 @@ class Home extends Component {
                                 </FormControl>
 
                                 <FormControl className={classes.formControl}>
-                                            <TextField
-                                                id = 'releasedateStart'
-                                                label='Release Date Start'
-                                                type='date'
-                                                defaultValue=''
-                                                InputLabelProps={{shrink : true}}
-
-                                            ></TextField>
-                                
+                                    <TextField
+                                        id="releaseDateStart"
+                                        label="Release Date Start"
+                                        type="date"
+                                        defaultValue=""
+                                        InputLabelProps={{ shrink: true }}
+                                    />
                                 </FormControl>
 
                                 <FormControl className={classes.formControl}>
-                                            <TextField
-                                                id = 'releasedateEnd'
-                                                label='Release Date End'
-                                                type='date'
-                                                defaultValue=''
-                                                InputLabelProps={{shrink : true}}
-
-                                            ></TextField>
-                                
+                                    <TextField
+                                        id="releaseDateEnd"
+                                        label="Release Date End"
+                                        type="date"
+                                        defaultValue=""
+                                        InputLabelProps={{ shrink: true }}
+                                    />
+                                </FormControl>
+                                <br /><br />
+                                <FormControl className={classes.formControl}>
+                                    <Button variant="contained" color="primary">
+                                        APPLY
+                                    </Button>
                                 </FormControl>
                             </CardContent>
                         </Card>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
 
 export default withStyles(styles)(Home);
-
