@@ -60,24 +60,35 @@ class Details extends Component {
         window.location = url;
     }
 
-    starClickHandler = (id) => {
-        let starIconList = [];
-        for (let star of this.state.starIcons) {
-            let starNode = star;
-            if (star.id <= id) {
-                starNode.color = "yellow"
-            }
-            else {
-                starNode.color = "black";
+    starClickHandler = (id) => () => {
+
+        let starIconList =[];
+
+        for(let star of this.state.starIcons){
+
+            let starNode= star;
+
+            if(star.id <= id) {
+
+                starNode.color="yellow";
+
+            } else {
+
+                starNode.color ="black";
 
             }
+
             starIconList.push(starNode);
+
         }
-        this.setState({ starIcons: starIconList });
+
+        this.setState({starIcons: starIconList});
+
     }
 
     render() {
         let movie = this.state.movie;
+        
         const opts = {
             height: '300',
             width: '700',
@@ -87,7 +98,7 @@ class Details extends Component {
         }
         return (
             <div className="details">
-                <Header />
+                <Header showBookShowButton = "true" />
                 <div className="back">
                     <Typography onClick={this.backToHomeHandler}>
                         &#60; Back to Home
@@ -139,8 +150,10 @@ class Details extends Component {
                         {this.state.starIcons.map(star => (
                             <StarBorderIcon
                                 className={star.color}
-                                key={"star" + star.id}
-                                onClick={() => this.starClickHandler(star.id)}
+                            //    key={"star" + star.id}
+                            key={"star" + star.id}
+                            onClick={() => this.starClickHandler('id')}
+                             //  onClick={() => this.starClickHandler(star.id)}
                             />
                         ))}
 
